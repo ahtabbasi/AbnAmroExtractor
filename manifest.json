@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "AbnAmro Exporter",
+  "version": "1.0",
+
+  "description": "Extracts the transactions from ABN AMRO transactions history",
+
+  "icons": {
+    "48": "icons/icon.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_title": "Extract",
+    "default_popup": "popup/popup.html"
+  }
+  
+}
