@@ -27,15 +27,7 @@ class Transaction {
 	}
 
 	processComments(input) {
-	    // Define the bullet character
-	    const bullet = '•';
-	    
-	    // Split the string at the bullet character
-	    const parts = input.split(bullet);
-	    
-	    // Return the part after the bullet character
-	    // Check if there are parts after splitting
-	    return parts.length > 1 ? parts.slice(1).join(bullet).trim() : '';
+	    return input.trim();
 	}
 }
 
@@ -73,20 +65,20 @@ function parseData() {
     transactionTiles.forEach((tile) => {
         try {
             // Safely get date
-            let dateElements = tile.querySelectorAll('div.subtitle span');
-            let date = dateElements.length > 0 ? dateElements[0].textContent.trim() : '';
+            let timestamp = tile.getAttribute('transactiontimestampiso');
+            let date = convertTimestampToDate(timestamp);
 
             // Safely get title
             let titleElement = tile.querySelector('div.title');
             let title = titleElement ? titleElement.textContent.trim() : '';
 
             // Safely get amount
-            let amountElement = tile.querySelector('span.amount');
+            let amountElement = tile.querySelector('span[data-testid="amount-value"]');
             let amount = amountElement ? amountElement.textContent.trim() : '';
 
             // Safely get description
             let descriptionElement = tile.querySelector('div.subtitle');
-            let description = descriptionElement ? descriptionElement.textContent.trim() : '';
+            let description = descriptionElement ? descriptionElement.textContent : '';
 
             // Create a new Transaction object
             let transaction = new Transaction(date, title, amount, description);
@@ -147,4 +139,19 @@ function removeTablesWithClass(className) {
     
     // Iterate over the NodeList and remove each table
     tables.forEach(table => table.remove());
+}
+
+function convertTimestampToDate(timestampMs) {
+    // Create a Date object from the timestamp
+    const date = new Date(timestampMs*1);
+
+    // Define an array of month abbreviations
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Get the month, day
+    const month = months[date.getMonth()]; // Get the month abbreviation
+    const day = date.getDate(); // Get the day of the month
+
+    // Format as "MMM-D"
+    return `${month}-${day}`;
 }
