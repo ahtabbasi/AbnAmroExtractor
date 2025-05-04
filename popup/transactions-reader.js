@@ -53,7 +53,7 @@ function main() {
 
 
 function parseData() {
-	let transactionTiles = document.querySelectorAll('div.transaction-tile');
+	let transactionTiles = document.querySelectorAll('li.transaction-tile');
 	let allTransactions = [];
 	
 	if (transactionTiles.length <= 0) {
