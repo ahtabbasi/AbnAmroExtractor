@@ -60,7 +60,11 @@ function parseData() {
   transactionTiles.forEach((tile) => {
     try {
       // Safely get date
-      let timestamp = tile.getAttribute("transactiontimestampiso");
+      // Get the parent of the tile (immediate parent) and then get the attribute from it
+      let timestamp = tile.parentElement.getAttribute(
+        "transactiontimestampiso"
+      );
+      console.log(`Processing tile with timestamp: ${timestamp}`);
       let date = convertTimestampToDate(timestamp);
 
       // Safely get title
